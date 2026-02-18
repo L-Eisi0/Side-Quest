@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Side Quest für Alle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      color: white;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: 16px;
+    }
+    .card {
+      background: #020617cc;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px #38bdf833;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 { color: #38bdf8; margin: 0 0 8px; }
+    #quest { font-size: 1.05rem; margin: 16px 0 20px; min-height: 56px; }
+    .btns { display: grid; gap: 10px; }
+    button {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 10px;
+      background: #38bdf8;
+      color: #020617;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .1s ease, filter .1s ease;
+    }
+    button.secondary { background: transparent; color: #38bdf8; border: 2px solid #38bdf8; }
+    button:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    footer { opacity: .7; margin-top: 10px; font-size: .85rem; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>🧙 Side Quest für Alle</h1>
+    <p>Klick & bekomme eine zufällige Aufgabe:</p>
+
+    <div id="quest">Bereit? 👀</div>
+
+    <div class="btns">
+      <button onclick="neueQuest()">Neue Quest</button>
+      <button class="secondary" onclick="questTeilen()">Quest teilen</button>
+    </div>
+
+    <footer>Keine Anmeldung. Kostenlos. Für alle.</footer>
+  </main>
+
+  <script>
+    const quests = [
+      "Trinke ein Glas Wasser 💧",
+      "Bewege dich 2 Minuten 🕺",
+      "Schreib jemandem etwas Nettes 💬",
+      "Räume 3 Dinge auf 🧹",
+      "Atme 5 tiefe Atemzüge 😮‍💨",
+      "Mach 15 Kniebeugen 🏋️",
+      "Lerne ein neues Wort 📚",
+      "Geh kurz ans Fenster & schau raus 🌤️",
+      "Hör dir ein neues Lied an 🎧",
+      "Lächle 20 Sekunden 😄"
+    ];
+
+    function neueQuest() {
+      const zufall = Math.floor(Math.random() * quests.length);
+      document.getElementById("quest").innerText = quests[zufall];
+    }
+
+    function questTeilen() {
+      const text = document.getElementById("quest").innerText;
+      if (!text || text === "Bereit? 👀") {
+        alert("Hol dir erst eine Quest 😉");
+        return;
+      }
+      if (navigator.share) {
+        navigator.share({ title: "Meine Side Quest", text });
+      } else {
+        navigator.clipboard.writeText(text);
+        alert("Quest kopiert! Teile sie mit deinen Freunden 🙌");
+      }
+    }
+  </script>
+</body>
+</html>
